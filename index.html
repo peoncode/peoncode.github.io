@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html draggable="false">
   <head>
     <title>DRAWPAD</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="drawpad.js"></script>
   </head>
-  <body>
-    <canvas id="canvas" style="border-style:solid; border-width:1px"></canvas>
-    <script type="text/javascript"> $(document).ready(function() {
+  <body draggable="false">
+    <canvas id="canvas" style="border-style:solid; border-width:1px" draggable="false"></canvas>
+    <script> $(document).ready(function() {
     	 prepareCanvas();
-});</script>
+      });
+    </script>
   </body>
 </html>
