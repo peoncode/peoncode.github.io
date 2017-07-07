@@ -15,28 +15,14 @@
 
 var canvas;
 var context;
-var canvasWidth = 800;
-var canvasHeight = 800;
-var padding = 25;
-var lineWidth = 8;
-var colorPurple = "#cb3594";
-var colorGreen = "#659b41";
-var colorYellow = "#ffcf33";
-var colorBrown = "#986928";
+var canvasWidth;
+var canvasHeight;
 var clickX = new Array();
 var clickY = new Array();
-var clickColor = new Array();
-var clickTool = new Array();
-var clickSize = new Array();
 var clickDrag = new Array();
 var paint = false;
-var curColor = colorPurple;
-var curTool = "marker";
+var curColor = "#cb3594";
 var curSize = "small";
-var drawingAreaX = 0;
-var drawingAreaY = 0;
-var drawingAreaWidth = canvasWidth;
-var drawingAreaHeight = canvasHeight;
 
 /**
 * Calls the redraw function after all neccessary resources are loaded.
@@ -59,9 +45,11 @@ function prepareCanvas()
 	// canvas.setAttribute('id', 'canvas');
  //  canvas.setAttribute('style', 'border-style:solid; border-width:1px');
 	// canvasDiv.appendChild(canvas);
-	var canvas = document.getElementById('canvas');
-	canvas.setAttribute('width', this.innerWidth-30);
-	canvas.setAttribute('height', this.innerHeight-30);
+	canvasWidth = this.innerWidth-30;
+	canvasHeight = this.innerHeight-30;
+	canvas = document.getElementById('canvas');
+	canvas.setAttribute('width', canvasWidth);
+	canvas.setAttribute('height', canvasHeight);
 	context = canvas.getContext("2d");
   context.lineJoin = "round";
   context.lineWidth = 2;
@@ -99,9 +87,6 @@ function prepareCanvas()
     clearCanvas();
     clickX = new Array();
     clickY = new Array();
-    clickColor = new Array();
-    clickTool = new Array();
-    clickSize = new Array();
     clickDrag = new Array();
   });
 }
@@ -116,9 +101,6 @@ function addClick(x, y, dragging)
 {
 	clickX.push(x);
 	clickY.push(y);
-	clickTool.push(curTool);
-	clickColor.push(curColor);
-	clickSize.push(curSize);
 	clickDrag.push(dragging);
 }
 
@@ -137,13 +119,10 @@ function redraw()
 {
 	clearCanvas();
 	
-	var locX;
-	var locY;
-	
 	// Keep the drawing in the drawing area
 	context.save();
 	context.beginPath();
-	context.rect(drawingAreaX, drawingAreaY, drawingAreaWidth, drawingAreaHeight);
+	context.rect(0, 0, canvasWidth, canvasHeight);
 	context.clip();
 		
 	var i = 0;
