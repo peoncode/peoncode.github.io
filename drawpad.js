@@ -68,7 +68,7 @@ function prepareCanvas()
 
 	// Add mouse events
 	// ----------------
-	$('#canvas').mousedown(function(e)
+	$('#canvas').on('mousedown touchstart', function(e)
 	{
 		// Mouse down location
 		var mouseX = e.pageX - this.offsetLeft;
@@ -79,23 +79,23 @@ function prepareCanvas()
 		redraw();
 	});
 	
-	$('#canvas').mousemove(function(e){
+	$('#canvas').on('mousemove touchmove', function(e){
 		if(paint==true){
 			addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
 			redraw();
 		}
 	});
 	
-	$('#canvas').mouseup(function(e){
+	$('#canvas').on('mouseup touchend', function(e){
 		paint = false;
 	  redraw();
 	});
 	
-	$('#canvas').mouseleave(function(e){
+	$('#canvas').on('mouseleave touchend', function(e){
 		paint = false;
 	});
 
-  $('#canvas').dblclick(function(e){
+  $('#canvas').on('dblclick doubletap', function(e){
     clearCanvas();
     clickX = new Array();
     clickY = new Array();
