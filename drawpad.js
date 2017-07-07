@@ -89,6 +89,8 @@ function prepareCanvas()
     clickY = new Array();
     clickDrag = new Array();
   });
+	
+$('#canvas').focus();
 }
 
 /**
