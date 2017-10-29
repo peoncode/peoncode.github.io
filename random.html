@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+
+<style>
+  #names {
+    width: 300px;
+  }
+
+  #title {
+    padding-top: 10px;
+  }
+</style>
+
+</HEAD>
+<BODY>
+<input type="text" id="names">
+<input type="button" id="go" value="Randomize!">
+<div id="title">
+  Names:
+</div>
+<div id="output">
+</div>
+
+
+
+<script>
+  var myButton = document.getElementById("go");
+  myButton.addEventListener("click", doRandomize);
+
+  function doRandomize(event) {
+    var list = document.getElementById("names");
+    var nameList = list.value.split(",").map(function(name) { return name.trim()});
+    var htmlList = ["<ol>"];
+    for (var i=0; i<nameList.length; i++) {
+      //Get our random index
+      var index = Math.floor(Math.random() * (nameList.length-i));
+      var name = "<li>" + nameList[index] + "</li>";
+      htmlList.push(name);
+      
+      //swap in last element
+      nameList[index] = nameList[nameList.length-1-i];
+    }
+    htmlList.push("</ol>");
+    
+    var outputField = document.getElementById("output");
+    outputField.innerHTML = htmlList.join("");
+  };
+</script>
+</BODY>
+</HTML>
