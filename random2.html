@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+
+<style>
+#container {
+  border: 1px solid grey;
+  height: 475px;
+  width: 560px;
+  overflow: hidden;
+  user-select: none;
+}
+
+#buttonContainer {
+  position: relative;
+  border-bottom: 1px solid grey;
+  height: 50px;
+  z-index: 5;
+  background-color: #45707D;
+}
+
+#bodyContainer {
+  position: relative;
+  background-color: #F3E5F5;
+}
+
+#instructions {
+  position: absolute;
+  font-family: sans-serif;
+  color: #455A64;
+}
+
+#orderContainer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 100%;
+  background-color: #E8F5E9;
+  z-index: 3;
+  transition: bottom .6s;
+}
+
+#orderTitle {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 20px;
+  color: #455A64;
+}
+
+#orderDiv {
+  width: 480px;
+  height: 330px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px; 
+}
+
+#team1Container {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: -50%;
+  top: 0px;
+  background-color: #B3E5FC;
+  z-index: 3;
+  transition: left .75s;
+  border-right: 2px solid white;
+  box-sizing: border-box;
+}
+
+#team2Container {
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  right: -50%;
+  top: 0px;
+  background-color: #FFCDD2;
+  z-index: 3;
+  transition: right .75s;
+  border-left: 2px solid white;
+  box-sizing: border-box;
+}
+
+.teamTitle {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 12px;
+  color: #455A64;
+}
+
+.teamDiv {
+  width: 240px;
+  height: 320px;
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;  
+}
+
+#randButtonContainer {
+  padding: 12px;
+  width: 416px;
+  margin: auto;
+}
+
+.button {
+  width: 70px;
+  height: 36px;
+  margin: 7px;
+  float: right;
+  font-weight: bold;
+}
+
+.refresh {
+  width: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='-3 -3 30 30'%3E%3Cpath fill='%23000' d='M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z' /%3E%3C/svg%3E");
+}
+
+.refresh_small {
+  width: 18px;
+  height: 18px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='-3 -3 30 30'%3E%3Cpath fill='%23000' d='M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z' /%3E%3C/svg%3E");
+}
+
+.teamButton {
+  visibility: visible !important;
+  box-shadow: 0px 0px 10px 0px #37474F;
+  animation: shrinker 1.0s 1;
+}
+
+@keyframes shrinker {
+  0%   {}
+  25%  {transform: scale(1.2);}
+  50%  {}
+  100% {transform: scale(1.0);}
+}
+
+.buttonVisible {
+  visibility: visible !important;
+  transform: scale(1);
+  box-shadow: 0px 0px 10px 0px #37474F;
+}
+
+.selectedRandom {
+  box-shadow: 0px 0px 15px 5px #F50057;
+  animation: shrinker 1s infinite;
+}
+
+.iconButton {
+  width: 60px;
+  height: 60px;
+  visibility: hidden;
+  margin: 10px;
+  border: 4px solid;
+  border-radius: 50%;
+}
+
+.centerButton_small {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #1565C0;
+  border-radius: 5px;
+  background-color: #0091EA;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:40px;height:40px' viewBox='-4 -4 34 34'%3E%3Cpath fill='%23FFF' d='M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z' /%3E%3C/svg%3E");  
+}
+
+.centerButton {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  border: 4px solid #1565C0;
+  border-radius: 15px;
+  background-color: #0091EA;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:40px;height:40px' viewBox='-4 -4 34 34'%3E%3Cpath fill='%23FFF' d='M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z' /%3E%3C/svg%3E");  
+  }
+
+.title {
+  display: inline-block;
+  color: white;
+  font-family: Verdana;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 50px;
+  padding-left: 10px;
+}
+
+.heart {
+  border-color: #f05327;
+  background-color: #f69d84;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' style='width:24px;height:24px' viewBox='-5 -6 34 34'%3E%3Cpath fill='%23FFF' d='M12.1,18.55L12,18.65L11.89,18.55C7.14,14.24 4,11.39 4,8.5C4,6.5 5.5,5 7.5,5C9.04,5 10.54,6 11.07,7.36H12.93C13.46,6 14.96,5 16.5,5C18.5,5 20,6.5 20,8.5C20,11.39 16.86,14.24 12.1,18.55M16.5,3C14.76,3 13.09,3.81 12,5.08C10.91,3.81 9.24,3 7.5,3C4.42,3 2,5.41 2,8.5C2,12.27 5.4,15.36 10.55,20.03L12,21.35L13.45,20.03C18.6,15.36 22,12.27 22,8.5C22,5.41 19.58,3 16.5,3Z' /%3E%3C/svg%3E");
+}
+
+.alarm {
+  border-color: #77c043;
+  background-color: #aeda90;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,20A7,7 0 0,1 5,13A7,7 0 0,1 12,6A7,7 0 0,1 19,13A7,7 0 0,1 12,20M12,4A9,9 0 0,0 3,13A9,9 0 0,0 12,22A9,9 0 0,0 21,13A9,9 0 0,0 12,4M12.5,8H11V14L15.75,16.85L16.5,15.62L12.5,13.25V8M7.88,3.39L6.6,1.86L2,5.71L3.29,7.24L7.88,3.39M22,5.72L17.4,1.86L16.11,3.39L20.71,7.25L22,5.72Z' /%3E%3C/svg%3E");
+}
+
+.android {
+  border-color: #007c43;
+  background-color: #55a882;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-7 -7 38 38'%3E%3Cpath fill='%23FFF' d='M15,5H14V4H15M10,5H9V4H10M15.53,2.16L16.84,0.85C17.03,0.66 17.03,0.34 16.84,0.14C16.64,-0.05 16.32,-0.05 16.13,0.14L14.65,1.62C13.85,1.23 12.95,1 12,1C11.04,1 10.14,1.23 9.34,1.63L7.85,0.14C7.66,-0.05 7.34,-0.05 7.15,0.14C6.95,0.34 6.95,0.66 7.15,0.85L8.46,2.16C6.97,3.26 6,5 6,7H18C18,5 17,3.25 15.53,2.16M20.5,8A1.5,1.5 0 0,0 19,9.5V16.5A1.5,1.5 0 0,0 20.5,18A1.5,1.5 0 0,0 22,16.5V9.5A1.5,1.5 0 0,0 20.5,8M3.5,8A1.5,1.5 0 0,0 2,9.5V16.5A1.5,1.5 0 0,0 3.5,18A1.5,1.5 0 0,0 5,16.5V9.5A1.5,1.5 0 0,0 3.5,8M6,18A1,1 0 0,0 7,19H8V22.5A1.5,1.5 0 0,0 9.5,24A1.5,1.5 0 0,0 11,22.5V19H13V22.5A1.5,1.5 0 0,0 14.5,24A1.5,1.5 0 0,0 16,22.5V19H17A1,1 0 0,0 18,18V8H6V18Z' /%3E%3C/svg%3E");
+}
+
+.apple {
+  border-color: #c4d600;
+  background-color: #e2eb80;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -4 34 34'%3E%3Cpath fill='%23FFF' d='M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z' /%3E%3C/svg%3E");
+}
+
+.bell {
+  border-color: #ffec00;
+  background-color: #fff794;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M16,17H7V10.5C7,8 9,6 11.5,6C14,6 16,8 16,10.5M18,16V10.5C18,7.43 15.86,4.86 13,4.18V3.5A1.5,1.5 0 0,0 11.5,2A1.5,1.5 0 0,0 10,3.5V4.18C7.13,4.86 5,7.43 5,10.5V16L3,18V19H20V18M11.5,22A2,2 0 0,0 13.5,20H9.5A2,2 0 0,0 11.5,22Z' /%3E%3C/svg%3E");
+}
+
+.bike {
+  border-color: #ffc709;
+  background-color: #ffe384;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -4 34 34'%3E%3Cpath fill='%23FFF' d='M5,20.5A3.5,3.5 0 0,1 1.5,17A3.5,3.5 0 0,1 5,13.5A3.5,3.5 0 0,1 8.5,17A3.5,3.5 0 0,1 5,20.5M5,12A5,5 0 0,0 0,17A5,5 0 0,0 5,22A5,5 0 0,0 10,17A5,5 0 0,0 5,12M14.8,10H19V8.2H15.8L13.86,4.93C13.57,4.43 13,4.1 12.4,4.1C11.93,4.1 11.5,4.29 11.2,4.6L7.5,8.29C7.19,8.6 7,9 7,9.5C7,10.13 7.33,10.66 7.85,10.97L11.2,13V18H13V11.5L10.75,9.85L13.07,7.5M19,20.5A3.5,3.5 0 0,1 15.5,17A3.5,3.5 0 0,1 19,13.5A3.5,3.5 0 0,1 22.5,17A3.5,3.5 0 0,1 19,20.5M19,12A5,5 0 0,0 14,17A5,5 0 0,0 19,22A5,5 0 0,0 24,17A5,5 0 0,0 19,12M16,4.8C17,4.8 17.8,4 17.8,3C17.8,2 17,1.2 16,1.2C15,1.2 14.2,2 14.2,3C14.2,4 15,4.8 16,4.8Z' /%3E%3C/svg%3E");
+}
+
+.bomb {
+  border-color: #f7941e;
+  background-color: #ffb358;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -5 34 34'%3E%3Cpath fill='%23FFF' d='M11.25,6A3.25,3.25 0 0,1 14.5,2.75A3.25,3.25 0 0,1 17.75,6C17.75,6.42 18.08,6.75 18.5,6.75C18.92,6.75 19.25,6.42 19.25,6V5.25H20.75V6A2.25,2.25 0 0,1 18.5,8.25A2.25,2.25 0 0,1 16.25,6A1.75,1.75 0 0,0 14.5,4.25A1.75,1.75 0 0,0 12.75,6H14V7.29C16.89,8.15 19,10.83 19,14A7,7 0 0,1 12,21A7,7 0 0,1 5,14C5,10.83 7.11,8.15 10,7.29V6H11.25M22,6H24V7H22V6M19,4V2H20V4H19M20.91,4.38L22.33,2.96L23.04,3.67L21.62,5.09L20.91,4.38Z' /%3E%3C/svg%3E");
+}
+
+.cake {
+  border-color: #a62451;
+  background-color: #ce859e;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,6C13.11,6 14,5.1 14,4C14,3.62 13.9,3.27 13.71,2.97L12,0L10.29,2.97C10.1,3.27 10,3.62 10,4A2,2 0 0,0 12,6M16.6,16L15.53,14.92L14.45,16C13.15,17.29 10.87,17.3 9.56,16L8.5,14.92L7.4,16C6.75,16.64 5.88,17 4.96,17C4.23,17 3.56,16.77 3,16.39V21A1,1 0 0,0 4,22H20A1,1 0 0,0 21,21V16.39C20.44,16.77 19.77,17 19.04,17C18.12,17 17.25,16.64 16.6,16M18,9H13V7H11V9H6A3,3 0 0,0 3,12V13.54C3,14.62 3.88,15.5 4.96,15.5C5.5,15.5 6,15.3 6.34,14.93L8.5,12.8L10.61,14.93C11.35,15.67 12.64,15.67 13.38,14.93L15.5,12.8L17.65,14.93C18,15.3 18.5,15.5 19.03,15.5C20.11,15.5 21,14.62 21,13.54V12A3,3 0 0,0 18,9Z' /%3E%3C/svg%3E");
+}
+
+.car {
+  border-color: #732282;
+  background-color: #b285ba;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M16,6L19,10H21C22.11,10 23,10.89 23,12V15H21A3,3 0 0,1 18,18A3,3 0 0,1 15,15H9A3,3 0 0,1 6,18A3,3 0 0,1 3,15H1V12C1,10.89 1.89,10 3,10L6,6H16M10.5,7.5H6.75L4.86,10H10.5V7.5M12,7.5V10H17.14L15.25,7.5H12M6,13.5A1.5,1.5 0 0,0 4.5,15A1.5,1.5 0 0,0 6,16.5A1.5,1.5 0 0,0 7.5,15A1.5,1.5 0 0,0 6,13.5M18,13.5A1.5,1.5 0 0,0 16.5,15A1.5,1.5 0 0,0 18,16.5A1.5,1.5 0 0,0 19.5,15A1.5,1.5 0 0,0 18,13.5Z' /%3E%3C/svg%3E");
+}
+
+.cat {
+  border-color: #4f2560;
+  background-color: #9e86a7;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,8L10.67,8.09C9.81,7.07 7.4,4.5 5,4.5C5,4.5 3.03,7.46 4.96,11.41C4.41,12.24 4.07,12.67 4,13.66L2.07,13.95L2.28,14.93L4.04,14.67L4.18,15.38L2.61,16.32L3.08,17.21L4.53,16.32C5.68,18.76 8.59,20 12,20C15.41,20 18.32,18.76 19.47,16.32L20.92,17.21L21.39,16.32L19.82,15.38L19.96,14.67L21.72,14.93L21.93,13.95L20,13.66C19.93,12.67 19.59,12.24 19.04,11.41C20.97,7.46 19,4.5 19,4.5C16.6,4.5 14.19,7.07 13.33,8.09L12,8M9,11A1,1 0 0,1 10,12A1,1 0 0,1 9,13A1,1 0 0,1 8,12A1,1 0 0,1 9,11M15,11A1,1 0 0,1 16,12A1,1 0 0,1 15,13A1,1 0 0,1 14,12A1,1 0 0,1 15,11M11,14H13L12.3,15.39C12.5,16.03 13.06,16.5 13.75,16.5A1.5,1.5 0 0,0 15.25,15H15.75A2,2 0 0,1 13.75,17C13,17 12.35,16.59 12,16V16H12C11.65,16.59 11,17 10.25,17A2,2 0 0,1 8.25,15H8.75A1.5,1.5 0 0,0 10.25,16.5C10.94,16.5 11.5,16.03 11.7,15.39L11,14Z' /%3E%3C/svg%3E");
+}
+
+.cloud {
+  border-color: #76e2f4;
+  background-color: #c4f2fa;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-6 -6 36 36'%3E%3Cpath fill='%23FFF' d='M19,18H6A4,4 0 0,1 2,14A4,4 0 0,1 6,10H6.71C7.37,7.69 9.5,6 12,6A5.5,5.5 0 0,1 17.5,11.5V12H19A3,3 0 0,1 22,15A3,3 0 0,1 19,18M19.35,10.03C18.67,6.59 15.64,4 12,4C9.11,4 6.6,5.64 5.35,8.03C2.34,8.36 0,10.9 0,14A6,6 0 0,0 6,20H19A5,5 0 0,0 24,15C24,12.36 21.95,10.22 19.35,10.03Z' /%3E%3C/svg%3E");
+}
+
+.cannabis {
+  border-color: #165f33;
+  background-color: #5b8e6f;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M11.5,22V17.35C11,18.13 10,19.09 8.03,19.81C8.03,19.81 8.53,18.1 9.94,16.95C8.64,17.23 6.68,17.19 4,16C4,16 6.47,14.59 9.28,14.97C7.69,14 5.7,12.08 4.17,8.11C4.17,8.11 8.67,9.34 10.91,13.14C8.88,8.24 12,2 12,2C14.43,7.47 13.91,11.1 13.12,13.1C15.37,9.33 19.83,8.11 19.83,8.11C18.3,12.08 16.31,14 14.72,14.97C17.53,14.59 20,16 20,16C17.32,17.19 15.36,17.23 14.06,16.95C15.47,18.1 15.97,19.81 15.97,19.81C14,19.09 13,18.13 12.5,17.35V22H11.5Z' /%3E%3C/svg%3E");
+}
+
+.duck {
+  border-color: #00a7d8;
+  background-color: #66cae8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M8.5,5A1.5,1.5 0 0,0 7,6.5A1.5,1.5 0 0,0 8.5,8A1.5,1.5 0 0,0 10,6.5A1.5,1.5 0 0,0 8.5,5M10,2A5,5 0 0,1 15,7C15,8.7 14.15,10.2 12.86,11.1C14.44,11.25 16.22,11.61 18,12.5C21,14 22,12 22,12C22,12 21,21 15,21H9C9,21 4,21 4,16C4,13 7,12 6,10C2,10 2,6.5 2,6.5C3,7 4.24,7 5,6.65C5.19,4.05 7.36,2 10,2Z' /%3E%3C/svg%3E");
+}
+
+.poop {
+  border-color: #cb865e;
+  background-color: #e1baa3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M11.36,2C11.15,2 10.87,2.12 10.57,2.32C10,2.7 8.85,3.9 8.4,5.1C8.06,6 8.05,6.82 8.19,7.43C7.63,7.53 7.22,7.71 7.06,7.78C6.55,8 5.47,8.96 5.37,10.45C5.34,10.97 5.41,11.5 5.57,12C4.91,12.19 4.53,12.43 4.5,12.44C4.18,12.56 3.65,12.93 3.5,13.13C3.15,13.53 2.92,14 2.79,14.5C2.5,15.59 2.6,16.83 3.13,17.83C3.42,18.39 3.82,19 4.26,19.43C5.7,20.91 8.18,21.47 10.14,21.79C12.53,22.19 15.03,22.05 17.26,21.13C20.61,19.74 21.5,17.5 21.64,16.89C21.93,15.5 21.57,14.19 21.42,13.87C21.2,13.41 20.84,12.94 20.25,12.64C19.85,12.39 19.5,12.26 19.24,12.2C19.5,11.25 19.13,10.5 18.62,9.94C17.85,9.12 17.06,9 17.06,9V9C17.32,8.5 17.42,7.9 17.28,7.32C17.12,6.61 16.73,6.16 16.22,5.86C15.7,5.55 15.06,5.4 14.4,5.28C14.08,5.22 12.75,5.03 12.2,4.27C11.75,3.65 11.74,2.53 11.62,2.2C11.57,2.07 11.5,2 11.36,2M16,9.61C16.07,9.61 16.13,9.62 16.19,9.62C17.62,9.78 18.64,11.16 18.47,12.69C18.3,14.22 17,15.34 15.57,15.18V15.18C14.14,15 13.12,13.65 13.29,12.11C13.45,10.66 14.64,9.56 16,9.61M8.62,9.61C9.95,9.65 11.06,10.78 11.16,12.21C11.28,13.75 10.21,15.08 8.78,15.19H8.77C7.34,15.3 6.08,14.14 5.96,12.6V12.6C5.85,11.06 6.92,9.73 8.35,9.62V9.62C8.44,9.61 8.53,9.61 8.62,9.61M8.64,11.31C8.6,11.31 8.57,11.31 8.53,11.32C7.97,11.39 7.57,11.9 7.64,12.45C7.7,13 8.21,13.39 8.77,13.32C9.33,13.25 9.73,12.74 9.67,12.19C9.61,11.67 9.15,11.3 8.64,11.31M15.94,11.33C15.42,11.35 15,11.75 14.96,12.28C14.92,12.83 15.35,13.31 15.91,13.34C16.5,13.38 16.96,12.95 17,12.4C17.04,11.84 16.61,11.36 16.05,11.33C16,11.33 16,11.33 15.94,11.33M8.71,16.15C9,16.14 9.26,16.23 9.5,16.28C10.68,16.5 11.7,16.53 12.19,16.53C12.68,16.53 13.69,16.5 14.86,16.28C15.27,16.2 15.74,16.03 16.11,16.28C16.59,16.6 16.24,17.75 15.5,18.53C15.04,19 13.97,19.91 12.19,19.91C10.41,19.91 9.33,19 8.88,18.53C8.14,17.75 7.79,16.6 8.26,16.28C8.4,16.19 8.55,16.15 8.71,16.15Z' /%3E%3C/svg%3E");
+}
+
+.fan {
+  border-color: #007bbe;
+  background-color: #7ebcde;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,11A1,1 0 0,0 11,12A1,1 0 0,0 12,13A1,1 0 0,0 13,12A1,1 0 0,0 12,11M12.5,2C17,2 17.11,5.57 14.75,6.75C13.76,7.24 13.32,8.29 13.13,9.22C13.61,9.42 14.03,9.73 14.35,10.13C18.05,8.13 22.03,8.92 22.03,12.5C22.03,17 18.46,17.1 17.28,14.73C16.78,13.74 15.72,13.3 14.79,13.11C14.59,13.59 14.28,14 13.88,14.34C15.87,18.03 15.08,22 11.5,22C7,22 6.91,18.42 9.27,17.24C10.25,16.75 10.69,15.71 10.89,14.79C10.4,14.59 9.97,14.27 9.65,13.87C5.96,15.85 2,15.07 2,11.5C2,7 5.56,6.89 6.74,9.26C7.24,10.25 8.29,10.68 9.22,10.87C9.41,10.39 9.73,9.97 10.14,9.65C8.15,5.96 8.94,2 12.5,2Z' /%3E%3C/svg%3E");
+}
+
+.cool {
+  border-color: #5f923a;
+  background-color: #96b77e;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M19,10C19,11.38 16.88,12.5 15.5,12.5C14.12,12.5 12.75,11.38 12.75,10H11.25C11.25,11.38 9.88,12.5 8.5,12.5C7.12,12.5 5,11.38 5,10H4.25C4.09,10.64 4,11.31 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12C20,11.31 19.91,10.64 19.75,10H19M12,4C9.04,4 6.45,5.61 5.07,8H18.93C17.55,5.61 14.96,4 12,4M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M12,17.23C10.25,17.23 8.71,16.5 7.81,15.42L9.23,14C9.68,14.72 10.75,15.23 12,15.23C13.25,15.23 14.32,14.72 14.77,14L16.19,15.42C15.29,16.5 13.75,17.23 12,17.23Z' /%3E%3C/svg%3E");
+}
+
+.fish {
+  border-color: #b4411d;
+  background-color: #d08972;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,20L12.76,17C9.5,16.79 6.59,15.4 5.75,13.58C5.66,14.06 5.53,14.5 5.33,14.83C4.67,16 3.33,16 2,16C3.1,16 3.5,14.43 3.5,12.5C3.5,10.57 3.1,9 2,9C3.33,9 4.67,9 5.33,10.17C5.53,10.5 5.66,10.94 5.75,11.42C6.4,10 8.32,8.85 10.66,8.32L9,5C11,5 13,5 14.33,5.67C15.46,6.23 16.11,7.27 16.69,8.38C19.61,9.08 22,10.66 22,12.5C22,14.38 19.5,16 16.5,16.66C15.67,17.76 14.86,18.78 14.17,19.33C13.33,20 12.67,20 12,20M17,11A1,1 0 0,0 16,12A1,1 0 0,0 17,13A1,1 0 0,0 18,12A1,1 0 0,0 17,11Z' /%3E%3C/svg%3E");
+}
+
+.flower {
+  border-color: #c4419c;
+  background-color: #df97c9;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M3,13A9,9 0 0,0 12,22C12,17 7.97,13 3,13M12,5.5A2.5,2.5 0 0,1 14.5,8A2.5,2.5 0 0,1 12,10.5A2.5,2.5 0 0,1 9.5,8A2.5,2.5 0 0,1 12,5.5M5.6,10.25A2.5,2.5 0 0,0 8.1,12.75C8.63,12.75 9.12,12.58 9.5,12.31C9.5,12.37 9.5,12.43 9.5,12.5A2.5,2.5 0 0,0 12,15A2.5,2.5 0 0,0 14.5,12.5C14.5,12.43 14.5,12.37 14.5,12.31C14.88,12.58 15.37,12.75 15.9,12.75C17.28,12.75 18.4,11.63 18.4,10.25C18.4,9.25 17.81,8.4 16.97,8C17.81,7.6 18.4,6.74 18.4,5.75C18.4,4.37 17.28,3.25 15.9,3.25C15.37,3.25 14.88,3.41 14.5,3.69C14.5,3.63 14.5,3.56 14.5,3.5A2.5,2.5 0 0,0 12,1A2.5,2.5 0 0,0 9.5,3.5C9.5,3.56 9.5,3.63 9.5,3.69C9.12,3.41 8.63,3.25 8.1,3.25A2.5,2.5 0 0,0 5.6,5.75C5.6,6.74 6.19,7.6 7.03,8C6.19,8.4 5.6,9.25 5.6,10.25M12,22A9,9 0 0,0 21,13C16,13 12,17 12,22Z' /%3E%3C/svg%3E");
+}
+
+.helmet {
+  border-color: #7b1315;
+  background-color: #ab696a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M13.5,12A1.5,1.5 0 0,0 12,13.5A1.5,1.5 0 0,0 13.5,15A1.5,1.5 0 0,0 15,13.5A1.5,1.5 0 0,0 13.5,12M13.5,3C18.19,3 22,6.58 22,11C22,12.62 22,14 21.09,16C17,16 16,20 12.5,20C10.32,20 9.27,18.28 9.05,16H9L8.24,16L6.96,20.3C6.81,20.79 6.33,21.08 5.84,21H3A1,1 0 0,1 2,20A1,1 0 0,1 3,19V16A1,1 0 0,1 2,15A1,1 0 0,1 3,14H6.75L7.23,12.39C6.72,12.14 6.13,12 5.5,12H5.07L5,11C5,6.58 8.81,3 13.5,3M5,16V19H5.26L6.15,16H5Z' /%3E%3C/svg%3E");
+}
+
+.gift {
+  border-color: #e67fb3;
+  background-color: #f2bfd9;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M22,12V20A2,2 0 0,1 20,22H4A2,2 0 0,1 2,20V12A1,1 0 0,1 1,11V8A2,2 0 0,1 3,6H6.17C6.06,5.69 6,5.35 6,5A3,3 0 0,1 9,2C10,2 10.88,2.5 11.43,3.24V3.23L12,4L12.57,3.23V3.24C13.12,2.5 14,2 15,2A3,3 0 0,1 18,5C18,5.35 17.94,5.69 17.83,6H21A2,2 0 0,1 23,8V11A1,1 0 0,1 22,12M4,20H11V12H4V20M20,20V12H13V20H20M9,4A1,1 0 0,0 8,5A1,1 0 0,0 9,6A1,1 0 0,0 10,5A1,1 0 0,0 9,4M15,4A1,1 0 0,0 14,5A1,1 0 0,0 15,6A1,1 0 0,0 16,5A1,1 0 0,0 15,4M3,8V10H11V8H3M13,8V10H21V8H13Z' /%3E%3C/svg%3E");
+}
+
+.ghost {
+  border-color: #f7acb8;
+  background-color: #fbd8dd;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,2A9,9 0 0,0 3,11V22L6,19L9,22L12,19L15,22L18,19L21,22V11A9,9 0 0,0 12,2M9,8A2,2 0 0,1 11,10A2,2 0 0,1 9,12A2,2 0 0,1 7,10A2,2 0 0,1 9,8M15,8A2,2 0 0,1 17,10A2,2 0 0,1 15,12A2,2 0 0,1 13,10A2,2 0 0,1 15,8Z' /%3E%3C/svg%3E");
+}
+
+.pencil {
+  border-color: #e2cc00;
+  background-color: #eee26d;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M16.84,2.73C16.45,2.73 16.07,2.88 15.77,3.17L13.65,5.29L18.95,10.6L21.07,8.5C21.67,7.89 21.67,6.94 21.07,6.36L17.9,3.17C17.6,2.88 17.22,2.73 16.84,2.73M12.94,6L4.84,14.11L7.4,14.39L7.58,16.68L9.86,16.85L10.15,19.41L18.25,11.3M4.25,15.04L2.5,21.73L9.2,19.94L8.96,17.78L6.65,17.61L6.47,15.29' /%3E%3C/svg%3E");
+}
+
+.bulb {
+  border-color: #e41858;
+  background-color: #f082a5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M12,6A6,6 0 0,1 18,12C18,14.22 16.79,16.16 15,17.2V19A1,1 0 0,1 14,20H10A1,1 0 0,1 9,19V17.2C7.21,16.16 6,14.22 6,12A6,6 0 0,1 12,6M14,21V22A1,1 0 0,1 13,23H11A1,1 0 0,1 10,22V21H14M20,11H23V13H20V11M1,11H4V13H1V11M13,1V4H11V1H13M4.92,3.5L7.05,5.64L5.63,7.05L3.5,4.93L4.92,3.5M16.95,5.63L19.07,3.5L20.5,4.93L18.37,7.05L16.95,5.63Z' /%3E%3C/svg%3E");
+}
+
+.twitter {
+  border-color: #00ac4b;
+  background-color: #68ce95;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-5 -5 34 34'%3E%3Cpath fill='%23FFF' d='M22.46,6C21.69,6.35 20.86,6.58 20,6.69C20.88,6.16 21.56,5.32 21.88,4.31C21.05,4.81 20.13,5.16 19.16,5.36C18.37,4.5 17.26,4 16,4C13.65,4 11.73,5.92 11.73,8.29C11.73,8.63 11.77,8.96 11.84,9.27C8.28,9.09 5.11,7.38 3,4.79C2.63,5.42 2.42,6.16 2.42,6.94C2.42,8.43 3.17,9.75 4.33,10.5C3.62,10.5 2.96,10.3 2.38,10C2.38,10 2.38,10 2.38,10.03C2.38,12.11 3.86,13.85 5.82,14.24C5.46,14.34 5.08,14.39 4.69,14.39C4.42,14.39 4.15,14.36 3.89,14.31C4.43,16 6,17.26 7.89,17.29C6.43,18.45 4.58,19.13 2.56,19.13C2.22,19.13 1.88,19.11 1.54,19.07C3.44,20.29 5.7,21 8.12,21C16,21 20.33,14.46 20.33,8.79C20.33,8.6 20.33,8.42 20.32,8.23C21.16,7.63 21.88,6.87 22.46,6Z' /%3E%3C/svg%3E");
+}
+
+</style>
+
+</HEAD>
+<BODY>
+<div id="container">
+  <div id="buttonContainer">
+    <div class="title">Randomizer 2.0</div>
+    <button id="doResetButton" class="button refresh"></button>
+    <button id="doTeamButton" class="button">TEAM 2</button>
+    <button id="doOrderButton" class="button">ORDER</button>
+    <button id="doPickButton" class="button">PICK 1</button>
+  </div>
+  <div id="bodyContainer">
+    <div id="instructions">
+      <ul>
+        <li>Click the <span class="centerButton_small">&nbsp;&nbsp;&nbsp;&nbsp;</span> button to add a person</li>
+        <li>Add as many as needed. Each person should remember his/her icon</li>
+        <li>Click on a person's icon button to be removed</li>
+        <li>Click <b>PICK 1</b> action to randomly select one from the sample</li>
+        <li>Click <b>ORDER</b> action to randomly order the sample</li>
+        <li>Click <b>TEAM 2</b> action to split sample into 2 Teams</li>
+        <li>Click <span class="refresh_small">&nbsp;&nbsp;&nbsp;&nbsp;</span> to reset</li>
+      </ul>
+    </div>
+    <div id="orderContainer">
+      <div id="orderTitle">RANDOM ORDER</div>
+      <div id="orderDiv"></div>
+    </div>
+    <div id="team1Container">
+      <div class="teamTitle">TEAM 1</div>
+      <div id="team1" class="teamDiv"></div>
+    </div>
+    <div id="randButtonContainer">
+      <button id="b00" class="iconButton"></button>
+      <button id="b01" class="iconButton"></button>
+      <button id="b02" class="iconButton"></button>
+      <button id="b03" class="iconButton"></button>
+      <button id="b04" class="iconButton"></button><br>
+      <button id="b10" class="iconButton"></button>
+      <button id="b11" class="iconButton"></button>
+      <button id="b12" class="iconButton"></button>
+      <button id="b13" class="iconButton"></button>
+      <button id="b14" class="iconButton"></button><br>
+      <button id="b20" class="iconButton"></button>
+      <button id="b21" class="iconButton"></button>
+      <button id="b22" class="centerButton"></button>
+      <button id="b23" class="iconButton"></button>
+      <button id="b24" class="iconButton"></button><br>
+      <button id="b30" class="iconButton"></button>
+      <button id="b31" class="iconButton"></button>
+      <button id="b32" class="iconButton"></button>
+      <button id="b33" class="iconButton"></button>
+      <button id="b34" class="iconButton"></button><br>
+      <button id="b40" class="iconButton"></button>
+      <button id="b41" class="iconButton"></button>
+      <button id="b42" class="iconButton"></button>
+      <button id="b43" class="iconButton"></button>
+      <button id="b44" class="iconButton"></button><br>
+    </div>
+    <div id="team2Container">
+      <div class="teamTitle">TEAM 2</div>
+      <div id="team2" class="teamDiv"></div>      
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  
+var numVisible = 0;
+var iconList = ["heart", "alarm", "android", "apple", "bell", "bike", "bomb", "cake", "car", "cat", "cloud", "cannabis", 
+                "duck", "poop", "fan", "cool", "fish", "flower", "helmet", "gift", "ghost", "pencil", "bulb", "twitter"];
+var buttonList = ["b00","b01","b02","b03","b04","b10","b11","b12","b13","b14","b20","b21",
+                  "b23","b24","b30","b31","b32","b33","b34","b40","b41","b42","b43","b44"];
+
+for (var j=0; j<5; j++) {
+  for (var i=0; i<5; i++) {
+    document.getElementById("b"+j+i).addEventListener("click", ("b"+j+i == "b22") ? doAddButton : doRemoveButton);
+  }
+}
+
+document.getElementById("doPickButton").addEventListener("click", randomGet);
+document.getElementById("doOrderButton").addEventListener("click", randomOrder);
+document.getElementById("doTeamButton").addEventListener("click", randomTeam);
+document.getElementById("doResetButton").addEventListener("click", resetPage);
+
+// ======================================
+//         click EventListeners
+// ======================================
+function randomGet(event) {
+  disableActions();
+  resetDivs();
+
+  //Remove any currently selected item
+  var selectedList = document.getElementsByClassName("selectedRandom");
+  
+  if (selectedList.length) {
+    // doRemoveButtonAction(selectedList[0]);
+    var button = document.getElementById(selectedList[0].id);
+    button.className = removeClassFrom(button.className, "selectedRandom");
+  }
+
+  var list = document.getElementsByClassName("buttonVisible");
+  if (list.length == 0) {
+    enableActions();
+    return;
+  }
+  
+  var randomIndex = Math.floor(Math.random() * list.length);
+  list[randomIndex].className += " selectedRandom";
+  enableActions();
+};
+
+async function randomOrder(event) {
+  // console.log("Click ORDER");
+  disableActions();
+  var randomizedList = getRandomizedList();
+  if (randomizedList.length == 0) {
+    enableActions();
+    return;
+  }
+
+  resetDivs();
+
+  // Display the order container
+  var orderContainer = document.getElementById("orderContainer");
+  orderContainer.style.bottom = "0%";
+  await sleep(500);
+
+  var container = document.getElementById("orderDiv");
+
+  for (var i=0; i<randomizedList.length; i++) {
+    await sleep(500);
+    createTeamButtonInDiv(randomizedList[i], container);
+  }
+  enableActions();
+}
+
+async function randomTeam(event) {
+  // console.log("Click TEAM");
+  disableActions();
+  var randomizedList = getRandomizedList();
+  if (randomizedList.length == 0) {
+    enableActions();
+    return;
+  }
+
+  resetDivs();
+  
+  // Display the team containers
+  var team1Container = document.getElementById("team1Container");
+  var team2Container = document.getElementById("team2Container");
+  team1Container.style.left = "0%";
+  team2Container.style.right = "0%";
+  await sleep(500);
+
+  var team1 = document.getElementById("team1");
+  var team2 = document.getElementById("team2");
+
+  for (var i=0; i<randomizedList.length; i++) {
+    await sleep(500);
+    createTeamButtonInDiv(randomizedList[i], i%2==0 ? team1 : team2);
+  }
+  enableActions();
+};
+  
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+function getRandomizedList() {
+  var list = document.getElementsByClassName("buttonVisible");
+  if (list.length == 0) {
+    return [];
+  }
+  
+  var buttonList = [];
+  for (var i=0; i<list.length; i++) {
+    buttonList.push(list[i]);
+  }
+
+  var randomizedList = [];
+  for (var i=0; i<buttonList.length; i++) {
+    var randomIndex = Math.floor(Math.random() * (list.length-i));
+    randomizedList.push(buttonList[randomIndex]);
+    buttonList[randomIndex] = buttonList[buttonList.length-i-1];
+  }
+
+  return randomizedList;
+};
+  
+function createTeamButtonInDiv(b, div) {
+  //Create new team button in div
+  var tButton = document.createElement("button");
+  tButton.className = "teamButton iconButton " + b.name;
+  div.appendChild(tButton);
+} 
+
+function resetPage(event) {
+  numVisible = 0;
+  buttonList = ["b00","b01","b02","b03","b04","b10","b11","b12","b13","b14","b20","b21","b23","b24","b30","b31","b32","b33","b34","b40","b41","b42","b43","b44"];
+  iconList = ["heart", "alarm", "android", "apple", "bell", "bike", "bomb", "cake", "car", "cat", "cloud", "cannabis", "duck", "poop", "fan", "cool", "fish", "flower", "helmet", "gift", "ghost", "pencil", "bulb", "twitter"];
+
+  var list = document.getElementsByClassName("buttonVisible");
+  while (list.length) {
+    setButtonHidden(list[0]);
+  }
+
+  //Show instructions
+  document.getElementById("instructions").style.visibility = "visible";
+
+  // Reset team containers
+  var team1 = document.getElementById("team1Container");
+  var team2 = document.getElementById("team2Container");
+  var orderContainer = document.getElementById("orderContainer");
+  team1.style.left = "-50%";
+  team2.style.right = "-50%";
+  orderContainer.style.bottom = "100%";
+
+  // Remove all teamButtons
+  resetDivs();
+};
+
+function resetDivs() {
+  // Reset team containers
+  var team1 = document.getElementById("team1Container");
+  var team2 = document.getElementById("team2Container");
+  var orderContainer = document.getElementById("orderContainer");
+  team1.style.left = "-50%";
+  team2.style.right = "-50%";
+  orderContainer.style.bottom = "100%";
+
+  // Remove all teamButtons
+  var list = document.getElementById("team1");
+  while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+  }
+  list = document.getElementById("team2");
+  while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+  }
+  list = document.getElementById("orderDiv");
+  while (list.hasChildNodes()) {   
+    list.removeChild(list.firstChild);
+  }
+};
+
+
+function doAddButton(event) {
+  if (numVisible >= 24) {
+    return;
+  } else if (numVisible == 0) {
+    document.getElementById("instructions").style.visibility = "hidden";
+  }
+  
+  var index = Math.floor(Math.random() * (buttonList.length - numVisible));
+  var b = document.getElementById(buttonList[index]);
+  var iconIndex = Math.floor(Math.random() * (iconList.length - numVisible));
+  b.name = iconList[iconIndex];
+  b.className = "iconButton " + iconList[iconIndex];
+  iconList[iconIndex] = iconList[iconList.length-numVisible-1];
+
+  // Randomly set a button to visible
+  setButtonVisible(b);
+  buttonList[index] = buttonList[buttonList.length-numVisible-1];
+  numVisible++;
+}
+
+function doRemoveButtonAction(button) {
+  setButtonHidden(button);
+  buttonList[buttonList.length-numVisible] = button.id;
+  var temp = removeClassFrom(button.className, "iconButton");
+  iconList[iconList.length-numVisible] = removeClassFrom(temp, "selectedRandom");
+  numVisible--;
+  // log("doRemoveButtonAction", button);
+}
+
+function doRemoveButton(event) {
+  doRemoveButtonAction(event.target);
+}
+
+function setButtonVisible(b) {
+  b.className = "buttonVisible " + b.className;
+  // log("setButtonVisible",b);
+}
+
+function setButtonHidden(b) {
+  b.className = removeClassFrom(b.className, "buttonVisible");
+}
+
+function removeClassFrom(classString, className) {
+  var newClassName = classString.replace(className, "").trim();
+  return newClassName.replace("  ", " ").trim();
+}
+
+function log(msg, button) {
+  console.log(`${msg}: \n bId=${button && button.id}  class='${button && button.className}'' numVisible=${numVisible}`);
+}
+
+function disableActions() {
+  var actions = document.getElementsByClassName("button");
+  for (var i=0; i<actions.length; i++) {
+    actions[i].disabled = true;
+  }
+}
+
+function enableActions() {
+  var actions = document.getElementsByClassName("button");
+  for (var i=0; i<actions.length; i++) {
+    actions[i].disabled = false;
+  }
+}
+  
+})();
+</script>
+</BODY>
+</HTML>
