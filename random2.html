@@ -459,12 +459,12 @@ async function randomOrder(event) {
   // Display the order container
   var orderContainer = document.getElementById("orderContainer");
   orderContainer.style.bottom = "0%";
-  await sleep(500);
+  await sleep(400);
 
   var container = document.getElementById("orderDiv");
 
   for (var i=0; i<randomizedList.length; i++) {
-    await sleep(500);
+    await sleep(400);
     createTeamButtonInDiv(randomizedList[i], container);
   }
   enableActions();
@@ -486,13 +486,13 @@ async function randomTeam(event) {
   var team2Container = document.getElementById("team2Container");
   team1Container.style.left = "0%";
   team2Container.style.right = "0%";
-  await sleep(500);
+  await sleep(400);
 
   var team1 = document.getElementById("team1");
   var team2 = document.getElementById("team2");
 
   for (var i=0; i<randomizedList.length; i++) {
-    await sleep(500);
+    await sleep(400);
     createTeamButtonInDiv(randomizedList[i], i%2==0 ? team1 : team2);
   }
   enableActions();
