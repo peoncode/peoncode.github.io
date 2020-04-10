@@ -1,148 +1,100 @@
 
-// Copyright 2010 William Malone (www.williammalone.com)
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//   http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-
-var canvas;
-var context;
-var canvasWidth;
-var canvasHeight;
-var clickX = new Array();
-var clickY = new Array();
-var clickDrag = new Array();
-var paint = false;
-var curColor = "#cb3594";
-var curSize = "small";
-
-/**
-* Calls the redraw function after all neccessary resources are loaded.
-*/
-function resourceLoaded()
-{
-	redraw();
-}
-
-/**
-* Creates a canvas element, loads images, adds events, and draws the canvas for the first time.
-*/
 function prepareCanvas()
 {
-	// Create the canvas (Neccessary for IE because it doesn't know what a canvas element is)
-	// var canvasDiv = document.getElementById('canvasDiv');
-	// canvas = document.createElement('canvas');
-	// canvas.setAttribute('width', canvasWidth);
-	// canvas.setAttribute('height', canvasHeight);
-	// canvas.setAttribute('id', 'canvas');
- //  canvas.setAttribute('style', 'border-style:solid; border-width:1px');
-	// canvasDiv.appendChild(canvas);
-	canvasWidth = this.innerWidth-30;
-	canvasHeight = this.innerHeight-30;
-	canvas = document.getElementById('canvas');
-	canvas.setAttribute('width', canvasWidth);
-	canvas.setAttribute('height', canvasHeight);
-	context = canvas.getContext("2d");
+  const canvasWidth = this.innerWidth-30;
+  const canvasHeight = this.innerHeight-30;
+  const curColor = "#cb3594";
+  const canvas = document.getElementById("canvas");
+  canvas.height = canvasHeight;
+  canvas.width = canvasWidth;
+  
+  const context = canvas.getContext("2d");
   context.lineJoin = "round";
-  context.lineWidth = 2;
+  context.lineCap = "round";
+  context.lineWidth = 3;
+  context.strokeStyle = curColor;
 
-	// Add mouse events
-	// ----------------
-	$('#canvas').on('mousedown touchstart', function(e)
-	{
-		// Mouse down location
-		var mouseX = e.pageX - this.offsetLeft;
-		var mouseY = e.pageY - this.offsetTop;
-		
-		paint = true;
-		addClick(mouseX, mouseY, false);
-		redraw();
-	});
-	
-	$('#canvas').on('mousemove touchmove', function(e){
-		if(paint==true){
-			addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-			redraw();
-		}
-	});
-	
-	$('#canvas').on('mouseup touchend', function(e){
-		paint = false;
-	  redraw();
-	});
-	
-	$('#canvas').on('mouseleave touchend', function(e){
-		paint = false;
-	});
-
-  $('#canvas').on('dblclick doubletap', function(e){
-    clearCanvas();
-    clickX = new Array();
-    clickY = new Array();
-    clickDrag = new Array();
+  canvas.addEventListener("mousedown", function(e) {
+    this.down = true;  
+    this.X = e.pageX ;
+    this.Y = e.pageY ;
   });
-	
-$('#canvas').focus();
-}
 
-/**
-* Adds a point to the drawing array.
-* @param x
-* @param y
-* @param dragging
-*/
-function addClick(x, y, dragging)
-{
-	clickX.push(x);
-	clickY.push(y);
-	clickDrag.push(dragging);
-}
+  canvas.addEventListener("mouseup", function() {
+    this.down = false;      
+  });
 
-/**
-* Clears the canvas.
-*/
-function clearCanvas()
-{
-	context.clearRect(0, 0, canvasWidth, canvasHeight);
-}
+  canvas.addEventListener("mousemove", function(e) {
+    if (this.down) {
+      context.beginPath();
+      context.moveTo(this.X, this.Y);
+      context.lineTo(e.pageX, e.pageY);
+      context.stroke();
+      
+      this.X = e.pageX;
+      this.Y = e.pageY;
+    }
+  });
 
-/**
-* Redraws the canvas.
-*/
-function redraw()
-{
-	clearCanvas();
-	
-	// Keep the drawing in the drawing area
-	context.save();
-	context.beginPath();
-	context.rect(0, 0, canvasWidth, canvasHeight);
-	context.clip();
-		
-	var i = 0;
-	for(; i < clickX.length; i++)
-	{		
-		context.beginPath();
-		if(clickDrag[i] && i){
-			context.moveTo(clickX[i-1], clickY[i-1]);
-		}else{
-			context.moveTo(clickX[i], clickY[i]);
-		}
-		context.lineTo(clickX[i], clickY[i]);
-		context.closePath();		
-    context.strokeStyle = curColor;
-		context.stroke();
-	}
-	context.restore();
+  canvas.addEventListener("dblclick", function(e){
+    context.clearRect(0, 0, canvasWidth, canvasHeight);
+  });
+  
+  canvas.focus();
 }
 
 
-/**/
+
+// function midPointBtw(p1, p2) {
+//   return {
+//     x: p1.x + (p2.x - p1.x) / 2,
+//     y: p1.y + (p2.y - p1.y) / 2
+//   };
+// }
+
+// var el = document.getElementById('c');
+// var ctx = el.getContext('2d');
+
+// ctx.lineWidth = 10;
+// ctx.lineJoin = ctx.lineCap = 'round';
+
+// var isDrawing, points = [ ];
+
+// el.onmousedown = function(e) {
+//   isDrawing = true;
+//   points.push({ x: e.clientX, y: e.clientY });
+// };
+
+// el.onmousemove = function(e) {
+//   if (!isDrawing) return;
+  
+//   points.push({ x: e.clientX, y: e.clientY });
+
+//   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  
+//   var p1 = points[0];
+//   var p2 = points[1];
+  
+//   ctx.beginPath();
+//   ctx.moveTo(p1.x, p1.y);
+//   console.log(points);
+
+//   for (var i = 1, len = points.length; i < len; i++) {
+//     // we pick the point between pi+1 & pi+2 as the
+//     // end point and p1 as our control point
+//     var midPoint = midPointBtw(p1, p2);
+//     ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
+//     p1 = points[i];
+//     p2 = points[i+1];
+//   }
+//   // Draw last line as a straight line while
+//   // we wait for the next point to be able to calculate
+//   // the bezier control point
+//   ctx.lineTo(p1.x, p1.y);
+//   ctx.stroke();
+// };
+
+// el.onmouseup = function() {
+//   isDrawing = false;
+//   points.length = 0;
+// };
