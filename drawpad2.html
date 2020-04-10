@@ -1,0 +1,16 @@
+ <html>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script>
+        function init() {
+        var canvas = document.querySelector("canvas");
+        var signaturePad = new SignaturePad(canvas, {
+            minWidth: 2,
+            maxWidth: 4,
+            penColor: "#B639C7"
+        });
+        }
+    </script>
+    <body onload="init()">
+        <canvas id="canvas" width="1000" height="1000" style="position:absolute;top:10%;left:10%;border:2px solid;"></canvas>
+    </body>
+    </html>
