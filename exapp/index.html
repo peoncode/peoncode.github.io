@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<HTML>
+  <HEAD>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166060394-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-166060394-1');
+    </script>
+    <!-- End Google Analytics -->
+
+
+
+    <!--
+      {EXERCISE APP}
+      1) button to start routine (done)
+      2) working clock to count 3:00 (done)
+      3) colour change at start to red (done)
+      4) at 45 sec, colour change to green (done)
+      5) 3 sec before next min, flash 
+
+      colours: https://www.colorcombos.com/color-schemes/5475/ColorCombo5475.html
+    -->
+
+    <link rel="stylesheet" href="styles.css">
+    <script src="index.js"></script>
+  </HEAD>
+  <BODY onload="domReady()" id='body' class='flex-container'>
+    <div class='flex-container'>
+      <div id='msg'></div>
+      <div id='clock'></div>
+      <div id='button-group'>
+        <div id='titles'>
+          <div class='title'>*✧･ﾟ:* EXERCISE APP *:･ﾟ✧*</div>
+          <div class='subtitle'>AN EASY WAY TO SET TIME INTERVALS FOR YOUR WORKOUTS!</div>
+        </div>
+        <button type="button" id='start' onclick='startRoutine()'>START</button>
+        <button type="button" id='settings' onclick='showPopup()'>
+          <span>CHANGE ROUTINE</span>
+          <img class='gear-icon' src='cog-solid.png'>
+        </button>
+      </div>
+    </div>
+    <div id='popup'>
+      <button type='button' id='x' onclick='hidePopup()'><img class='close-icon' src='times-circle-solid.png'></button>
+      <div class='title'>CREATE YOUR ROUTINE!</div>
+      <div class='column'>
+        <div class='action'>
+          <div class='header'>TYPE:</div>
+          <input type='radio' name='type' value='work' id='work' checked>
+          <label for='work'>WORK</label><br>
+          <input type='radio' name='type' value='rest' id='rest'>
+          <label for='rest'>REST</label>
+        </div>
+        <div class='action'>
+          <div class='header'>TIME:</div>
+          <input type='number' id='time' value='30'> seconds
+        </div>
+        <div class='action'>
+        <button type="button" id='done' onclick='addInterval()'>ADD</button>
+        </div>
+      </div>
+      <div class='column'>
+        <ul id='routine' class='action routineList'>
+          <li onclick='removeTask(this)' type='work' time=45>WORK for 45s <img src='trash-alt-solid.png'></li>
+          <li onclick='removeTask(this)' type='rest' time=15>REST for 15s <img src='trash-alt-solid.png'></li>
+          <li onclick='removeTask(this)' type='work' time=45>WORK for 45s <img src='trash-alt-solid.png'></li>
+          <li onclick='removeTask(this)' type='rest' time=15>REST for 15s <img src='trash-alt-solid.png'></li>
+          <li onclick='removeTask(this)' type='work' time=45>WORK for 60s <img src='trash-alt-solid.png'></li>
+        </ul>
+      </div>
+  </div>
+    <audio id="beep3Audio">
+      <source src="beep3.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="beep5Audio">
+      <source src="beep5.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <audio id="fanfareAudio">
+      <source src="fanfare.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <div id='copyright'>
+      made by danae dang
+      ©	05/2020
+      (hi ms. fronk) <br>
+      sorry, not mobile friendly.
+    </div>
+  </BODY>
+</HTML>
