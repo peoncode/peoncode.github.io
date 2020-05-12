@@ -7,7 +7,7 @@ req:
  let BODY_STYLE, CLOCK, MSG, START_BUTTON, BEEP3_AUDIO, BEEP5_AUDIO, FANFARE_AUDIO;
  
  function domReady() {
-   console.log('dom is ready');
+   console.log('dom is ready 321');
    START_BUTTON = document.getElementById('start'); 
    START_BUTTON.focus();
    BUTTONS = document.getElementById('button-group');
