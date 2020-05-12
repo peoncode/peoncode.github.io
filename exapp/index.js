@@ -25,6 +25,10 @@ function hidePopup() {
 }
 
 function showPopup() {
+  gtag('event', 'change_routine', {
+    'event_category' : 'configuration',
+    'event_label' : 'button_pressed'
+  });
   popup.style.display = 'block';
 }
 
@@ -68,6 +72,10 @@ function getRoutineFromConfig() {
 }
 
 async function startRoutine() {
+  gtag('event', 'start_routine', {
+    'event_category' : 'engagement',
+    'event_label' : 'button_pressed'
+  });  
   document.getElementById('titles').style.display = 'none';
   BUTTONS.style.display = 'none';
   MSG.innerHTML = '';
