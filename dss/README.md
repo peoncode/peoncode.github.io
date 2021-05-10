@@ -7,6 +7,10 @@ The assignment description and requirements are written in the PDF file: [DSS - 
 - Code Review [HERE](https://github.com/peoncode/peoncode.github.io/pull/1)
 - DEMO PAGE [HERE](https://peoncode.github.io/dss/dss.html)
 
+### Usage Notes
+- The instructions mentioned minimal mouse events so navigation on this page is meant to be done using the Arrow keys (↑ ↓ ← →).
+- Dragging and slide buttons are disabled!
+
 ### Impelementation Notes
 - Standard client-side web stack (HTML, JavaScript, CSS)
 - Hosted on Github Pages
