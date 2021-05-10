@@ -4,7 +4,8 @@
 The assignment description and requirements are written in the PDF file: [DSS - BBD Engineer - Take Home Exercise v2.pdf](https://peoncode.github.io/dss/DSS%20-%20BBD%20Engineer%20-%20Take%20Home%20Exercise%20v2.pdf)
 
 ### Submission
-Go [HERE](https://peoncode.github.io/dss/dss.html)
+- Code Review [HERE](https://github.com/peoncode/peoncode.github.io/pull/1)
+- DEMO PAGE [HERE](https://peoncode.github.io/dss/dss.html)
 
 ### Impelementation Notes
 - Standard client-side web stack (HTML, JavaScript, CSS)
